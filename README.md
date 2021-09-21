@@ -1,6 +1,6 @@
 # HHCL-ReID
 
-This repository is the official implementation of [Our Paper "HARD-SAMPLE GUIDED HYBRID CONTRAST LEARNING FOR UNSUPERVISED PERSON RE-IDENTIFICATION!"](https://). 
+This repository is the official implementation of [Our Paper "Hard-sample Guided Hybrid Contrast Learning for Unsupervised Person Re-Identification!"](https://). 
 
 > include a graphic explaining your approach/main result, bibtex entry, link to demos, blog posts and tutorials
 
