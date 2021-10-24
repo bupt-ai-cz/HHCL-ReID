@@ -1,60 +1,68 @@
-# HHCL-ReID  (Coming Soon!)
+HHCL-ReID  (Coming Soon!)
 
-This repository is the official implementation of our paper ["Hard-sample Guided Hybrid Contrast Learning for Unsupervised Person Re-Identification!"](https://arxiv.org/abs/2109.12333).  
+This repository is the official implementation of our paper "Hard-sample Guided Hybrid Contrast Learning for Unsupervised Person Re-Identification!".  
 
-> include a graphic explaining your approach/main result, bibtex entry, link to demos, blog posts and tutorials
+![framework_HCCL](img/framework_HCCL.jpg)
 
-## Requirements
+Requirements
 
-To install requirements:
+    pip install -r requirements.txt
+    cd HHCL-ReID
+    python setup.py develop
 
-```setup
-pip install -r requirements.txt
-```
+Prepare Datasets
 
->  Describe how to set up the environment, e.g. pip/conda/docker commands, download datasets, etc...
+Download the datasets Market-1501,MSMT17,DukeMTMC-reID and unzip them under the directory like:
 
-## Training
+    HHCL-ReID/examples/data
+    ├── market1501
+    │   └── Market-1501-v15.09.15
+    ├── msmt17
+    │   └── MSMT17_V1
+    └── dukemtmcreid
+        └── DukeMTMC-reID
 
-To train the model(s) in the paper, run this command:
+Prepare ImageNet Pre-trained Models for IBN-Net
 
-```train
-python train.py --input-data <path_to_data> --alpha 10 --beta 20
-```
+When training with the backbone of IBN-ResNet, you need to download the ImageNet-pretrained model from this link and save it under the path of examples/pretrained/.
 
->  Describe how to train the models, with example commands on how to train the models in your paper, including the full training procedure and appropriate hyperparameters.
+Training
 
-## Evaluation
+We utilize 4 GTX-2080TI GPUs for training. Examples:
+
+Market-1501:
+
+    CUDA_VISIBLE_DEVICES=0,1,2,3 python examples/train.py -b 256 -a resnet50 -d market1501 --iters 200 --momentum 0.1 --eps 0.45 --num-instances 16
+
+MSMT17:
+
+    CUDA_VISIBLE_DEVICES=0,1,2,3 python examples/train.py -b 256 -a resnet50 -d msmt17 --iters 400 --momentum 0.1 --eps 0.6 --num-instances 16
+
+DukeMTMC-reID:
+
+    CUDA_VISIBLE_DEVICES=0,1,2,3 python examples/train.py -b 256 -a resnet50 -d dukemtmcreid --iter 200 --momentum 0.1 --eps 0.6 --num-instances 16
+
+Evaluation
 
 To evaluate my model on ImageNet, run:
 
-```eval
-python eval.py --model-file mymodel.pth --benchmark imagenet
-```
+    CUDA_VISIBLE_DEVICES=0 python examples/test.py -d $DATASET --resume $PATH
 
->  Describe how to evaluate the trained models on benchmarks reported in the paper, give commands that produce the results (section below).
-
-## Pre-trained Models
-
-You can download pretrained models here:
-
-- [My awesome model](https://drive.google.com/mymodel.pth) trained on ImageNet using parameters x,y,z. 
-
->  Give a link to where/how the pretrained models can be downloaded and how they were trained (if applicable).  Alternatively you can have an additional column in your results table with a link to the models.
-
-## Results
+Results
 
 Our model achieves the following performance on :
 
-### [Image Classification on ImageNet](https://paperswithcode.com/sota/image-classification-on-imagenet)
-
-| Model name         | Top 1 Accuracy  | Top 5 Accuracy |
-| ------------------ |---------------- | -------------- |
-| My awesome model   |     85%         |      95%       |
-
->  Include a table of results from your paper, and link back to the leaderboard for clarity and context. If your main result is a figure, include that figure and link to the command or notebook to reproduce it. 
+  Dataset           	Market1501	    	    	    	DukeMTMC-reID	    	    	    
+  Setting           	mAP       	R1  	R5  	R10 	mAP          	R1  	R5  	R10 
+  Fully Unsupervised	84.2      	93.4	97.7	98.5	73.3         	85.1	92.4	94.6
+  Supervised        	87.2      	94.6	98.5	99.1	80.0         	89.8	95.2	96.7
 
 
-## Contributing
 
->  Pick a licence and describe how to contribute to your code repository. 
+Contributing
+
+Pick a licence and describe how to contribute to your code repository. 
+
+Acknowledgements
+
+Thanks to Yixiao Ge for opening source of his excellent works SpCL.
