@@ -6,7 +6,7 @@ This repository is the official implementation of our paper "Hard-sample Guided 
 
 Requirements
 
-    pip install -r requirements.txt
+    git clone https://github.com/bupt-ai-cz/HHCL-ReID.git
     cd HHCL-ReID
     python setup.py develop
 
