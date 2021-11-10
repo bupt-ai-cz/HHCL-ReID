@@ -1,5 +1,5 @@
 # HHCL-ReID
-[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Codes%20for%20Our%20Paper:%20"Hard-sample%20Guided%20Hybrid%20Contrast%20Learning%20for%20Unsupervised%20Person%Re-Identification20"%20&url=https://github.com/bupt-ai-cz/HHCL-ReID)  
+[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Codes%20for%20Our%20Paper:%20"Hard-sample%20Guided%20Hybrid%20Contrast%20Learning%20for%20Unsupervised%20Person%Re-Identification%20"%20&url=https://github.com/bupt-ai-cz/HHCL-ReID)  
 
 This repository is the official implementation of our paper "[Hard-sample Guided Hybrid Contrast Learning for Unsupervised Person Re-Identification](https://arxiv.org/abs/2109.12333)!".  
 
