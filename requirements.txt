@@ -1,0 +1,11 @@
+numpy
+sklearn
+Cython
+h5py
+pyzmq
+pillow-simd
+six
+scipy
+matplotlib
+faiss-gpu==1.6.3
+easydict

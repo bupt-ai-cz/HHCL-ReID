@@ -10,6 +10,7 @@ This repository is the official implementation of our paper "Hard-sample Guided 
 
     git clone https://github.com/bupt-ai-cz/HHCL-ReID.git
     cd HHCL-ReID
+    pip install -r requirements.txt
     python setup.py develop
 
 ## Prepare Datasets
@@ -42,16 +43,16 @@ We utilize 4 GTX-2080TI GPUs for training. Examples:
 
 Market-1501:
 
-    CUDA_VISIBLE_DEVICES=0,1,2,3 python examples/cluster_contrast_train_usl.py -b 256 -a resnet50 -d market1501 --iters 200 --eps 0.45 --num-instances 16 --pooling-type avg --memorybank CMhybird --epochs 60 --logs-dir examples/logs/market1501/resnet50_avg_cmhybird
+    CUDA_VISIBLE_DEVICES=0,1,2,3 python examples/train.py -b 256 -a resnet50 -d market1501 --iters 200 --eps 0.45 --momentum 0.1 --num-instances 16 --pooling-type avg --memorybank CMhybird --epochs 60 --logs-dir examples/logs/market1501/resnet50_avg_cmhybird
     
 
 DukeMTMC-reID:
 
     
-    CUDA_VISIBLE_DEVICES=0,1,2,3 python examples/cluster_contrast_train_usl.py -b 256 -a resnet50 -d dukemtmcreid --iters 200 --eps 0.6 --num-instances 16 --pooling-type avg --memorybank CMhybird --epochs 60 --logs-dir examples/logs/dukemtmcreid/resnet50_avg_cmhybird
+    CUDA_VISIBLE_DEVICES=0,1,2,3 python examples/train.py -b 256 -a resnet50 -d dukemtmcreid --iters 200 --eps 0.6 --momentum 0.1 --num-instances 16 --pooling-type avg --memorybank CMhybird --epochs 60 --logs-dir examples/logs/dukemtmcreid/resnet50_avg_cmhybird
 
 - use `-a resnet50` (default) for the backbone of ResNet-50, and `-a resnet_ibn50a` for the backbone of IBN-ResNet;
-- use `--pooling-type gem` for Generalized Mean Pooling (GEM) pooling and `--smooth 
+- use `--pooling-type gem` for Generalized Mean Pooling (GEM) pooling and `--smooth` for label smoothing. 
 
 ## Evaluation
 
