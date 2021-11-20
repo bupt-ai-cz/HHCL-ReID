@@ -75,7 +75,7 @@ Our model achieves the following performance on :
 | Fully Unsupervised | 84.2       | 93.4 | 97.7 | 98.5 | 73.3          | 85.1 | 92.4 | 94.6 |
 | Supervised         | 87.2       | 94.6 | 98.5 | 99.1 | 80.0          | 89.8 | 95.2 | 96.7 |
 
-You can download the above models in the paper from [[Google Drive\]](https://drive.google.com/drive/folders/1ryx-fPGjrexwm9ZP9QO3Qk4SKzNqbaXw?usp=sharing) 
+You can download the above models in the paper from [Google Drive](https://drive.google.com/drive/folders/1WQw7wD2Mu_1SKl07_NdKvrYf2xrs3CEZ) 
 
 ## Citation
 
