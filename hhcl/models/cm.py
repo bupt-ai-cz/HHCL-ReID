@@ -76,7 +76,7 @@ def cm_hard(inputs, indexes, features, momentum=0.5):
     return CM_Hard.apply(inputs, indexes, features, torch.Tensor([momentum]).to(inputs.device))
 
 
-class CM_Hybird(autograd.Function):
+class CM_Hybrid(autograd.Function):
 
     @staticmethod
     def forward(ctx, inputs, targets, features, momentum):
@@ -116,11 +116,11 @@ class CM_Hybird(autograd.Function):
         return grad_inputs, None, None, None
 
 
-def cm_hybird(inputs, indexes, features, momentum=0.5):
-    return CM_Hybird.apply(inputs, indexes, features, torch.Tensor([momentum]).to(inputs.device))
+def cm_hybrid(inputs, indexes, features, momentum=0.5):
+    return CM_Hybrid.apply(inputs, indexes, features, torch.Tensor([momentum]).to(inputs.device))
 
 
-class CM_Hybird_v2(autograd.Function):
+class CM_Hybrid_v2(autograd.Function):
 
     @staticmethod
     def forward(ctx, inputs, targets, features, momentum, num_instances):
@@ -159,8 +159,8 @@ class CM_Hybird_v2(autograd.Function):
         return grad_inputs, None, None, None, None
 
 
-def cm_hybird_v2(inputs, indexes, features, momentum=0.5, num_instances=16, *args):
-    return CM_Hybird_v2.apply(inputs, indexes, features, torch.Tensor([momentum]).to(inputs.device), num_instances)
+def cm_hybrid_v2(inputs, indexes, features, momentum=0.5, num_instances=16, *args):
+    return CM_Hybrid_v2.apply(inputs, indexes, features, torch.Tensor([momentum]).to(inputs.device), num_instances)
 
 
 class ClusterMemory(nn.Module, ABC):
@@ -187,11 +187,11 @@ class ClusterMemory(nn.Module, ABC):
 
         if self.cm_type in ['CM', 'CMhard']:
             self.register_buffer('features', torch.zeros(num_samples, num_features))
-        elif self.cm_type=='CMhybird':
+        elif self.cm_type=='CMhybrid':
             self.hard_weight = hard_weight
             print('hard_weight: {}'.format(self.hard_weight))
             self.register_buffer('features', torch.zeros(2*num_samples, num_features))
-        elif self.cm_type=='CMhybird_v2':
+        elif self.cm_type=='CMhybrid_v2':
             self.hard_weight = hard_weight
             self.num_instances = num_instances
             self.register_buffer('features', torch.zeros((self.num_instances+1)*num_samples, num_features))
@@ -206,15 +206,15 @@ class ClusterMemory(nn.Module, ABC):
             loss = self.cross_entropy(outputs, targets)
             return loss
 
-        elif self.cm_type=='CMhybird':
-            outputs = cm_hybird(inputs, targets, self.features, self.momentum)
+        elif self.cm_type=='CMhybrid':
+            outputs = cm_hybrid(inputs, targets, self.features, self.momentum)
             outputs /= self.temp
             output_hard, output_mean = torch.chunk(outputs, 2, dim=1)
             loss = self.hard_weight * (self.cross_entropy(output_hard, targets) + (1 - self.hard_weight) * self.cross_entropy(output_mean, targets))
             return loss
 
-        elif self.cm_type=='CMhybird_v2':
-            outputs = cm_hybird_v2(inputs, targets, self.features, self.momentum, self.num_instances)
+        elif self.cm_type=='CMhybrid_v2':
+            outputs = cm_hybrid_v2(inputs, targets, self.features, self.momentum, self.num_instances)
             out_list = torch.chunk(outputs, self.num_instances+1, dim=1)
             out = torch.stack(out_list[1:], dim=0)
             neg = torch.max(out, dim=0)[0]

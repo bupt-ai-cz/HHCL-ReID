@@ -195,7 +195,7 @@ def main_worker(args):
             memory_features = features[indexes]
             return memory_features
 
-        if args.memorybank=='CMhybird_v2':
+        if args.memorybank=='CMhybrid_v2':
             memory_features = generate_random_features(pseudo_labels, features, num_cluster, args.num_instances)
             mask = (pseudo_labels < 0).astype(int)
             print('==> Statistics for outliers with pseudo labels. outliers/total = {}/{} = {:.3f}'.format(mask.sum(), pseudo_labels.size, mask.sum()/pseudo_labels.size))
@@ -206,9 +206,9 @@ def main_worker(args):
         memory = ClusterMemory(model.module.num_features, num_cluster, temp=args.temp,
                                 momentum=args.momentum, mode=args.memorybank, smooth=args.smooth,
                                 num_instances=args.num_instances).cuda()
-        if args.memorybank=='CMhybird':
+        if args.memorybank=='CMhybrid':
             memory.features = F.normalize(cluster_features.repeat(2, 1), dim=1).cuda()
-        elif args.memorybank=='CMhybird_v2':
+        elif args.memorybank=='CMhybrid_v2':
             memory.features = F.normalize(torch.cat([cluster_features, memory_features],dim=0), dim=1).cuda()
         else:
             memory.features = F.normalize(cluster_features, dim=1).cuda()
@@ -289,7 +289,7 @@ if __name__ == '__main__':
     parser.add_argument('--momentum', type=float, default=0.1,
                         help="update momentum for the memory bank")
     parser.add_argument('--pooling-type', type=str, default='gem')
-    parser.add_argument('-mb', '--memorybank', type=str, default='CM', choices=['CM', 'CMhard', 'CMhybird', 'CMhybird_v2'])
+    parser.add_argument('-mb', '--memorybank', type=str, default='CM', choices=['CM', 'CMhard', 'CMhybrid', 'CMhybrid_v2'])
 
     # optimizer
     parser.add_argument('--lr', type=float, default=0.00035,
