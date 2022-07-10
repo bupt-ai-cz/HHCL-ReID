@@ -4,7 +4,6 @@ import warnings
 from .market1501 import Market1501
 from .msmt17 import MSMT17
 from .personx import PersonX
-from .veri import VeRi
 from .dukemtmcreid import DukeMTMCreID
 from .celebreid import CelebReID
 
@@ -13,7 +12,6 @@ __factory = {
     'market1501': Market1501,
     'msmt17': MSMT17,
     'personx': PersonX,
-    'veri': VeRi,
     'dukemtmcreid': DukeMTMCreID,
     'celebreid': CelebReID
 }
